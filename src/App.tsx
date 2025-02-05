@@ -22,6 +22,12 @@ export const App = () => (
     dashboard={HomePage}
     loginPage={Loginpage}
   >
-    <Resource name="users" list={UserList} edit={UserEdit} show={ShowGuesser} />
+    {/* <Resource name="users" list={UserList} edit={UserEdit} show={ShowGuesser} /> */}
+    <Resource
+      name="onboarding"
+      list={ListGuesser}
+      edit={EditGuesser}
+      show={ShowGuesser}
+    />
   </Admin>
 );

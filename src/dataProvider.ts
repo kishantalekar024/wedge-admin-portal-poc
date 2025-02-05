@@ -31,7 +31,7 @@ import {
 } from "react-admin";
 import { stringify } from "query-string";
 
-const apiUrl = import.meta.env.VITE_SIMPLE_REST_URL;
+const apiUrl = "https://65c32aeff7e6ea59682c11c1.mockapi.io/test-api";
 const httpClient = fetchUtils.fetchJson;
 
 export const dataProvider: DataProvider = {
