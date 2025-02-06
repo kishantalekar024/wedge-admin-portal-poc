@@ -42,7 +42,6 @@ export const OnboardingShow = () => (
           <TextField source="manualNotes" />
           <BooleanField source="isManualOverridden" />
           <TextField source="overriddenBy" />
-          <ReferenceField source="_id" reference="s" />
           <DateField source="createdAt" />
           <DateField source="updatedAt" />
         </Datagrid>

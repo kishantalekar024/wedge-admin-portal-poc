@@ -4,17 +4,40 @@ import {
   ChipField,
   Datagrid,
   DateField,
+  DateInput,
   EmailField,
   List,
   NumberField,
-  ReferenceField,
+  SelectInput,
   SingleFieldList,
   TextField,
+  TextInput,
 } from "react-admin";
 
-export const OnboardingList = ({ props }) => {
+export const OnboardingList = () => {
+  const OnboardingListFilters = [
+    <TextInput key={"search"} source="email" label="search" alwaysOn={true} />,
+    <SelectInput
+      key="status"
+      source="status"
+      label="Status"
+      choices={["PENDING", "COMPLETED", "FAILED", "IN_PROGRESS"].map(
+        (choice) => ({ id: choice, name: choice }),
+      )}
+    />,
+    <SelectInput
+      key="failure reason"
+      source="failureReason"
+      label="failure reason"
+      choices={["FACE_MISMATCH", "DOCUMENT_EXPIRED", "ADDRESS_INVALID"].map(
+        (choice) => ({ id: choice, name: choice }),
+      )}
+    />,
+    <DateInput key="startDate" source="startDate" label="Start Date" />,
+    <DateInput key="endDate" source="endDate" label="End Date" />,
+  ];
   return (
-    <List {...props} disableAuthentication>
+    <List disableAuthentication filters={OnboardingListFilters} debounce={1000}>
       <Datagrid>
         <EmailField source="email" />
         <TextField source="id" />
@@ -33,7 +56,6 @@ export const OnboardingList = ({ props }) => {
             <ChipField source="status" />
           </SingleFieldList>
         </ArrayField>
-        <DateField source="__v" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
       </Datagrid>

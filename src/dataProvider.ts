@@ -32,11 +32,15 @@ import {
 import { stringify } from "query-string";
 
 // const apiUrl = "https://65c32aeff7e6ea59682c11c1.mockapi.io/test-api";
-const apiUrl = "http://localhost:3000";
+// const apiUrl = "http://localhost:3000";
+const apiUrl = import.meta.env.PROD
+  ? "https://wedge-admin-poc-server.onrender.com"
+  : "http://localhost:3000";
 const httpClient = fetchUtils.fetchJson;
 
 export const dataProvider: DataProvider = {
   getList: async (resource, params: GetListParams & QueryFunctionContext) => {
+    console.log("Filters:", params.filter);
     const { page, perPage } = params.pagination || { page: 1, perPage: 10 };
     const { field, order } = params.sort || { field: "id", order: "ASC" };
     const query = {
@@ -44,8 +48,9 @@ export const dataProvider: DataProvider = {
       perPage: perPage,
       sort: field,
       order: order.toLowerCase(),
-      ...params.filter,
+      filter: JSON.stringify(params.filter),
     };
+    console.log(query);
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
     return httpClient(url).then(({ json }) => ({
       data: json.data,
@@ -61,7 +66,6 @@ export const dataProvider: DataProvider = {
     resource: string,
     params: GetOneParams<RecordType> & QueryFunctionContext,
   ): Promise<GetOneResult<RecordType>> {
-    console.log(resource, params);
     const { id } = params;
     const url = `${apiUrl}/${resource}/${id}`;
     return httpClient(url).then(({ json }) => ({ data: json.data }));
