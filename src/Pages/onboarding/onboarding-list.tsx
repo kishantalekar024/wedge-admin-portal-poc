@@ -1,4 +1,5 @@
 import {
+  ArrayField,
   BooleanField,
   Datagrid,
   DateField,
@@ -6,8 +7,9 @@ import {
   EmailField,
   List,
   NumberField,
-  ReferenceArrayField,
+  ReferenceField,
   SelectInput,
+  SingleFieldList,
   TextField,
   TextInput,
 } from "react-admin";
@@ -34,10 +36,7 @@ export const OnboardingList = () => {
     <DateInput key="startDate" source="startDate" label="Start Date" />,
     <DateInput key="endDate" source="endDate" label="End Date" />,
   ];
-  // const PostPanel = () => {
-  //   const record = useRecordContext();
-  //   return <div>{record?.body}</div>;
-  // };
+
   return (
     <List disableAuthentication filters={OnboardingListFilters} debounce={1000}>
       <Datagrid>
@@ -53,7 +52,11 @@ export const OnboardingList = () => {
         <BooleanField source="isManualOverridden" />
         <TextField source="overriddenBy" />
         <DateField source="overriddenTimestamp" />
-        <ReferenceArrayField source="idvs" reference="idvs" label="Idvs" />
+        <ArrayField source="idvs">
+          <SingleFieldList>
+            <ReferenceField reference="idvs" source="_id" />
+          </SingleFieldList>
+        </ArrayField>
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
       </Datagrid>
