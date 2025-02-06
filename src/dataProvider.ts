@@ -75,7 +75,10 @@ export const dataProvider: DataProvider = {
       filter: JSON.stringify({ id: params.ids }),
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+    return httpClient(url).then(({ json }) => ({
+      data: json.data,
+      total: json.total,
+    }));
   },
 
   getManyReference: (resource, params) => {
@@ -92,11 +95,8 @@ export const dataProvider: DataProvider = {
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
     return httpClient(url).then(({ headers, json }) => ({
-      data: json,
-      total: parseInt(
-        (headers.get("content-range") || "0").split("/").pop() || "0",
-        10,
-      ),
+      data: json.data,
+      total: json.total,
     }));
   },
 
