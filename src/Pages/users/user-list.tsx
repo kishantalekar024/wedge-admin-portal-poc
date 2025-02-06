@@ -1,30 +1,30 @@
-import { Card, CardContent, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import {
   ArrayField,
   ChipField,
-  CreateButton,
   Datagrid,
-  DateField,
   FilterButton,
   FilterForm,
-  FilterList,
-  FilterListItem,
-  FilterLiveSearch,
-  ImageField,
-  ImageInput,
-  List,
   ListBase,
-  RichTextField,
-  SavedQueriesList,
   SearchInput,
   SimpleShowLayout,
   SingleFieldList,
   TextField,
   TextInput,
 } from "react-admin";
-import MailIcon from "@mui/icons-material/MailOutline";
-import CategoryIcon from "@mui/icons-material/LocalOffer";
-const FallbackImageField = ({ source, record = {} }) => (
+interface RecordType {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+// eslint-disable-next-line react/prop-types
+const FallbackImageField = ({
+  source,
+  record = {} as RecordType,
+}: {
+  source: string;
+  record?: RecordType;
+}) => (
   <img
     src={
       record[source] ||

@@ -31,7 +31,8 @@ import {
 } from "react-admin";
 import { stringify } from "query-string";
 
-const apiUrl = "https://65c32aeff7e6ea59682c11c1.mockapi.io/test-api";
+// const apiUrl = "https://65c32aeff7e6ea59682c11c1.mockapi.io/test-api";
+const apiUrl = "http://localhost:3000";
 const httpClient = fetchUtils.fetchJson;
 
 export const dataProvider: DataProvider = {
@@ -40,13 +41,16 @@ export const dataProvider: DataProvider = {
     const { field, order } = params.sort || { field: "id", order: "ASC" };
     const query = {
       page,
-      limit: perPage,
-      sortBy: field,
+      perPage: perPage,
+      sort: field,
       order: order.toLowerCase(),
       ...params.filter,
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
-    return httpClient(url).then(({ json }) => ({ data: json, total: 100 }));
+    return httpClient(url).then(({ json }) => ({
+      data: json.data,
+      total: json.total,
+    }));
   },
   update: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}`, {
@@ -60,7 +64,7 @@ export const dataProvider: DataProvider = {
     console.log(resource, params);
     const { id } = params;
     const url = `${apiUrl}/${resource}/${id}`;
-    return httpClient(url).then(({ json }) => ({ data: json }));
+    return httpClient(url).then(({ json }) => ({ data: json.data }));
   },
   getMany: (resource, params) => {
     const query = {

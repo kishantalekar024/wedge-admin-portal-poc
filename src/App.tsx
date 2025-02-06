@@ -1,18 +1,12 @@
-import {
-  Admin,
-  Resource,
-  ListGuesser,
-  EditGuesser,
-  ShowGuesser,
-  Login,
-} from "react-admin";
+import { Admin, Resource } from "react-admin";
 import { Layout } from "./Layout";
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
-import { UserList } from "./Pages/users/user-list";
-import { UserEdit } from "./Pages/users/user-edit";
 import { HomePage } from "./Pages/homepage";
 import Loginpage from "./Pages/loginpage";
+import { OnboardingList } from "./Pages/onboarding/onboarding-list";
+import { OnboardingEdit } from "./Pages/onboarding/onboarding-edit";
+import { OnboardingShow } from "./Pages/onboarding/onboarding-show";
 
 export const App = () => (
   <Admin
@@ -22,12 +16,11 @@ export const App = () => (
     dashboard={HomePage}
     loginPage={Loginpage}
   >
-    {/* <Resource name="users" list={UserList} edit={UserEdit} show={ShowGuesser} /> */}
     <Resource
       name="onboarding"
-      list={ListGuesser}
-      edit={EditGuesser}
-      show={ShowGuesser}
+      list={OnboardingList}
+      edit={OnboardingEdit}
+      show={OnboardingShow}
     />
   </Admin>
 );

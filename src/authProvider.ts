@@ -65,5 +65,18 @@ const authProvider: AuthProvider = {
     localStorage.removeItem("token");
     return Promise.resolve();
   },
+  getIdentity: () => {
+    const persistedUser = localStorage.getItem("user");
+    const user = persistedUser ? JSON.parse(persistedUser) : null;
+
+    return Promise.resolve({
+      id: "dsfds",
+      fullName: "fdssdf",
+      avatar: "f",
+    });
+  },
+  canAccess: (params) => {
+    return Promise.resolve(true);
+  },
 };
 export { authProvider };
